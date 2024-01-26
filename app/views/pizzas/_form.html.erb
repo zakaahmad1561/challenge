@@ -1,4 +1,4 @@
-<%= form_with(model: pizza) do |form| %>
+<%= form_with(model: pizza, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper' }) do |form| %>
   <% if pizza.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(pizza.errors.count, "error") %> prohibited this pizza from being saved:</h2>
@@ -16,10 +16,26 @@
     <%= form.text_field :name %>
   </div>
 
+  <template data-nested-form-target="template">
+    <%= form.fields_for :sizes, Size.new, child_index: 'NEW_RECORD' do |size_fields| %>
+      <%= render "pizzas/size_form", form: size_fields %>
+    <% end %>
+  </template>
+
+  <%= form.fields_for :sizes do |size_fields| %>
+    <%= render "pizzas/size_form", form: size_fields %>
+  <% end %>
+
+  <!-- Inserted elements will be injected before that target. -->
+  <div data-nested-form-target="target"></div>
+
+  <button type="button" data-action="nested-form#add">Add size</button>
+
   <div>
-    <%= form.label :size, style: "display: block" %>
-    <%= form.number_field :size %>
-  </div>
+  <%= form.label :ingredients%>
+  <%= form.collection_check_boxes :ingredient_ids, Ingredient.all, :id, :name %>
+  <div>
+
 
   <div>
     <%= form.submit %>

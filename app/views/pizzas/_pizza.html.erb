@@ -4,9 +4,19 @@
     <%= pizza.name %>
   </p>
 
-  <p>
-    <strong>Size:</strong>
-    <%= pizza.size %>
-  </p>
+  <% if pizza.sizes.present? %>
+    <%pizza.sizes.each do |size|%>
+
+      <%= size.name%>
+      <%=size.price%>
+    <%end%>
+  <%end%>
+
+  <% if pizza.ingredients.present? %>
+    <%pizza.ingredients.each do |ingredient|%>
+      
+      <%= ingredient.name%>
+    <%end%>
+  <%end%>
 
 </div>

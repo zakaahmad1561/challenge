@@ -1,4 +1,5 @@
 class Item < ApplicationRecord
   belongs_to :order
-  has_many :pizzas, dependent: :destroy
+  has_many :pizzaitems
+  has_many :pizzas, through: :pizzaitems
 end

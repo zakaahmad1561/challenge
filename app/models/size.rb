@@ -1,4 +1,4 @@
 class Size < ApplicationRecord
   belongs_to :pizza
-  enum :size, %i(large medium small)
+  enum :name, %i(large medium small)
 end
